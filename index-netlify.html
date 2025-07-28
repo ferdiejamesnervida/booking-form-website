@@ -7,10 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        emailjs.init("YOUR_USER_ID");
-    </script>
 </head>
 <body>
     <div class="container">
@@ -30,7 +26,14 @@
         </header>
 
         <main class="main-content">
-            <form id="bookingForm" class="booking-form">
+            <!-- Netlify Forms - just add data-netlify="true" and name attribute -->
+            <form id="bookingForm" class="booking-form" data-netlify="true" name="booking-form" netlify-honeypot="bot-field">
+                <!-- Hidden field for Netlify -->
+                <input type="hidden" name="form-name" value="booking-form" />
+                <p class="hidden">
+                    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </p>
+                
                 <div class="form-section">
                     <h2 class="section-title">Contact Information</h2>
                     
@@ -179,6 +182,6 @@
         </div>
     </div>
 
-    <script src="script-google-sheets.js"></script>
+    <script src="script-netlify.js"></script>
 </body>
 </html> 
