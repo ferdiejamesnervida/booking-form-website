@@ -68,8 +68,8 @@ function doPost(e) {
     const nextRow = sheet.getLastRow() + 1;
     sheet.getRange(nextRow, 1, 1, rowData.length).setValues([rowData]);
     
-    // Optional: Send email notification (uncomment if you want email notifications)
-    // sendEmailNotification(data);
+    // Send email notification
+    sendEmailNotification(data);
     
     // Return success response
     return ContentService
@@ -86,7 +86,7 @@ function doPost(e) {
 
 // Optional: Email notification function
 function sendEmailNotification(data) {
-  const recipient = 'your-email@gmail.com'; // Replace with your email
+  const recipient = 'ferdienervida@gmail.com'; // Replace with your email
   const subject = `New Booking Request from ${data.firstName} ${data.lastName}`;
   
   const message = `
