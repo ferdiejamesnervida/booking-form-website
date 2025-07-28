@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Ferdie Nervida – Blockchain Speaker & Cybersecurity Trainer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("YOUR_USER_ID");
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <span class="title-line">Book Ferdie Nervida</span>
+                    <span class="subtitle">Blockchain Speaker & Cybersecurity Trainer</span>
+                </h1>
+                <p class="header-description">
+                    Thank you for considering me for your event. To help tailor my talk to your audience, please answer a few quick questions below. I speak on blockchain, cybersecurity, crypto investigation, and the future of emerging technologies.
+                </p>
+                <div class="credentials">
+                    <p><i class="fas fa-star"></i> Previous speaking engagements include TEDx, DICT, TESDA, and the Davao Chamber Innovation Summit.</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <form id="bookingForm" class="booking-form">
+                <div class="form-section">
+                    <h2 class="section-title">Contact Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="role" class="form-label">What is your role/position?</label>
+                        <input type="text" id="role" name="role" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone/Viber</label>
+                        <input type="tel" id="phone" name="phone" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="messageType" class="form-label">What is this message about?</label>
+                        <select id="messageType" name="messageType" class="form-select">
+                            <option value="">Select an option</option>
+                            <option value="invitation">Invitation</option>
+                            <option value="inquiry">Inquiry</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">Organization Details</h2>
+                    
+                    <div class="form-group">
+                        <label for="organization" class="form-label">School / Company / Organization Name</label>
+                        <input type="text" id="organization" name="organization" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="orgType" class="form-label">Type of Organization</label>
+                        <select id="orgType" name="orgType" class="form-select">
+                            <option value="">Select an option</option>
+                            <option value="private">Private Company</option>
+                            <option value="faith-based">Faith-based Org</option>
+                            <option value="government">Government</option>
+                            <option value="school">School</option>
+                            <option value="ngo">NGO</option>
+                            <option value="student-org">Student Org</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">Event Details</h2>
+                    
+                    <div class="form-group">
+                        <label for="eventTitle" class="form-label">Event Title or Theme</label>
+                        <input type="text" id="eventTitle" name="eventTitle" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDate" class="form-label">Event Date</label>
+                        <input type="date" id="eventDate" name="eventDate" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventTime" class="form-label">Event Time / Preferred Speaking Slot</label>
+                        <input type="time" id="eventTime" name="eventTime" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="venue" class="form-label">Event Location / Venue Name</label>
+                        <input type="text" id="venue" name="venue" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="venueType" class="form-label">Venue Type</label>
+                        <input type="text" id="venueType" name="venueType" class="form-input" placeholder="e.g. auditorium, gym, virtual, classroom">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="audienceType" class="form-label">Audience Type</label>
+                        <input type="text" id="audienceType" name="audienceType" class="form-input" placeholder="e.g. students, teachers, corporate staff, executives">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="attendees" class="form-label">Estimated Number of Attendees</label>
+                        <input type="number" id="attendees" name="attendees" class="form-input" min="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="otherSpeakers" class="form-label">Other Confirmed Speakers (if any)</label>
+                        <textarea id="otherSpeakers" name="otherSpeakers" class="form-textarea" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="suggestedTopic" class="form-label">Suggested Topic or Theme for Me</label>
+                        <textarea id="suggestedTopic" name="suggestedTopic" class="form-textarea" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="speakingDuration" class="form-label">How long would you like me to speak?</label>
+                        <input type="text" id="speakingDuration" name="speakingDuration" class="form-input" placeholder="e.g. 45 mins + Q&A">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="budget" class="form-label">What is your working budget for the speaker?</label>
+                        <input type="text" id="budget" name="budget" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="otherInstructions" class="form-label">Other Instructions</label>
+                        <textarea id="otherInstructions" name="otherInstructions" class="form-textarea" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Send Booking Request</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </main>
+
+        <div id="successModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h3>Thanks for submitting your request!</h3>
+                </div>
+                <p>I'll be in touch shortly to confirm the details and schedule. Looking forward to collaborating with you.</p>
+                <button class="modal-close-btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script-emailjs.js"></script>
+</body>
+</html> 
