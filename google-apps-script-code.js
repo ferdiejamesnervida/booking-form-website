@@ -86,7 +86,7 @@ function doPost(e) {
 
 // Optional: Email notification function
 function sendEmailNotification(data) {
-  const recipient = 'ferdienervida@gmail.com'; // Replace with your email
+  const recipient = 'contact@ferdienervida.com'; // Replace with your email
   const subject = `New Booking Request from ${data.firstName} ${data.lastName}`;
   
   const message = `
@@ -110,4 +110,24 @@ function doGet(e) {
   return ContentService
     .createTextOutput('Google Apps Script is working!')
     .setMimeType(ContentService.MimeType.TEXT);
+}
+
+// Test email function - run this manually to test email sending
+function testEmail() {
+  const testData = {
+    firstName: 'Test',
+    lastName: 'User',
+    email: 'test@example.com',
+    organization: 'Test Organization',
+    eventTitle: 'Test Event',
+    eventDate: '2024-01-01',
+    venue: 'Test Venue'
+  };
+  
+  try {
+    sendEmailNotification(testData);
+    Logger.log('Test email sent successfully!');
+  } catch (error) {
+    Logger.log('Error sending test email: ' + error.toString());
+  }
 } 

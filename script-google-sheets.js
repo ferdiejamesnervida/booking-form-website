@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     async function sendToGoogleSheets(data) {
-        const googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbwQ4Y7uqaapsTVBMwMsSmQaNBHYHJ8FTK4DbOafySxQ5oBI17itqNt1oaNKqcAhs9xo/exec';
+        const googleAppsScriptUrl = 'YOUR_NEW_DEPLOYMENT_URL_HERE'; // Replace with your new deployment URL
         
         const payload = {
             timestamp: new Date().toISOString(),
