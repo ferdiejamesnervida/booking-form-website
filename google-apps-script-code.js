@@ -8,10 +8,7 @@ function doPost(e) {
     if (e.parameter.method === 'OPTIONS') {
       return ContentService
         .createTextOutput('')
-        .setMimeType(ContentService.MimeType.TEXT)
-        .setHeader('Access-Control-Allow-Origin', '*')
-        .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-        .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        .setMimeType(ContentService.MimeType.TEXT);
     }
     
     // Parse the incoming data (handle both JSON and form data)
@@ -27,11 +24,8 @@ function doPost(e) {
       });
     }
     
-    // Get the spreadsheet by ID (replace with your actual spreadsheet ID)
-    // To find your spreadsheet ID: open your Google Sheet and look at the URL
-    // It will be: https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit
-    const spreadsheetId = '1ZsRv55_ODU9jFukJCz01I9S3dz5MNv-UKmwQcw0RYiU'; // Replace this with your actual spreadsheet ID
-    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+    // Get the active spreadsheet (make sure you have a Google Sheet open)
+    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = spreadsheet.getActiveSheet();
     
     // If this is the first submission, add headers
@@ -97,19 +91,13 @@ function doPost(e) {
     // Return success response
     return ContentService
       .createTextOutput(JSON.stringify({ 'result': 'success', 'row': nextRow }))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*')
-      .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-      .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      .setMimeType(ContentService.MimeType.JSON);
       
   } catch (error) {
     // Return error response
     return ContentService
       .createTextOutput(JSON.stringify({ 'result': 'error', 'error': error.toString() }))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*')
-      .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-      .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -138,10 +126,7 @@ View full details in your Google Sheet.
 function doGet(e) {
   return ContentService
     .createTextOutput('Google Apps Script is working!')
-    .setMimeType(ContentService.MimeType.TEXT)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    .setMimeType(ContentService.MimeType.TEXT);
 }
 
 // Test email function - run this manually to test email sending
