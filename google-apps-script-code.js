@@ -27,8 +27,11 @@ function doPost(e) {
       });
     }
     
-    // Get the active spreadsheet (replace with your sheet ID if needed)
-    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    // Get the spreadsheet by ID (replace with your actual spreadsheet ID)
+    // To find your spreadsheet ID: open your Google Sheet and look at the URL
+    // It will be: https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit
+    const spreadsheetId = '1ZsRv55_ODU9jFukJCz01I9S3dz5MNv-UKmwQcw0RYiU'; // Replace this with your actual spreadsheet ID
+    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
     const sheet = spreadsheet.getActiveSheet();
     
     // If this is the first submission, add headers
