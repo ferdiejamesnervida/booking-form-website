@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     async function sendToGoogleSheets(data) {
-        const googleAppsScriptUrl = 'https://script.google.com/macros/s/YOUR_ACTUAL_DEPLOYMENT_ID/exec'; // Replace with your actual deployment URL
+        const googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbw1culn3M9DxXuovQJ0lyKmPFSCxIKwOWvhbB1x7YQWQbO8f30A-HY-4n1A6c2qVoXv/exec'; // Replace with your actual deployment URL
         
         const payload = {
             timestamp: new Date().toISOString(),
@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const response = await fetch(googleAppsScriptUrl, {
             method: 'POST',
-            mode: 'no-cors', // Important for cross-origin requests
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -121,9 +120,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log('Response received:', response);
         
-        // Since we're using no-cors, we can't check the response status
-        // The success is assumed if no error is thrown
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate processing time
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        console.log('Response data:', result);
+        
+        if (result.result === 'error') {
+            throw new Error(result.error || 'Unknown error from server');
+        }
     }
 
     // Success modal functions

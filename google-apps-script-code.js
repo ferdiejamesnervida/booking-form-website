@@ -4,6 +4,16 @@
 
 function doPost(e) {
   try {
+    // Handle CORS preflight requests
+    if (e.parameter.method === 'OPTIONS') {
+      return ContentService
+        .createTextOutput('')
+        .setMimeType(ContentService.MimeType.TEXT)
+        .setHeader('Access-Control-Allow-Origin', '*')
+        .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    }
+    
     // Parse the incoming data
     const data = JSON.parse(e.postData.contents);
     
@@ -74,13 +84,19 @@ function doPost(e) {
     // Return success response
     return ContentService
       .createTextOutput(JSON.stringify({ 'result': 'success', 'row': nextRow }))
-      .setMimeType(ContentService.MimeType.JSON);
+      .setMimeType(ContentService.MimeType.JSON)
+      .setHeader('Access-Control-Allow-Origin', '*')
+      .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+      .setHeader('Access-Control-Allow-Headers', 'Content-Type');
       
   } catch (error) {
     // Return error response
     return ContentService
       .createTextOutput(JSON.stringify({ 'result': 'error', 'error': error.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+      .setMimeType(ContentService.MimeType.JSON)
+      .setHeader('Access-Control-Allow-Origin', '*')
+      .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+      .setHeader('Access-Control-Allow-Headers', 'Content-Type');
   }
 }
 
@@ -109,7 +125,10 @@ View full details in your Google Sheet.
 function doGet(e) {
   return ContentService
     .createTextOutput('Google Apps Script is working!')
-    .setMimeType(ContentService.MimeType.TEXT);
+    .setMimeType(ContentService.MimeType.TEXT)
+    .setHeader('Access-Control-Allow-Origin', '*')
+    .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
 // Test email function - run this manually to test email sending
