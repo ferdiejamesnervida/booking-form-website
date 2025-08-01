@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     async function sendToGoogleSheets(data) {
-        const googleAppsScriptUrl = 'YOUR_NEW_DEPLOYMENT_URL_HERE'; // Replace with your new deployment URL
+        const googleAppsScriptUrl = 'https://script.google.com/macros/s/YOUR_ACTUAL_DEPLOYMENT_ID/exec'; // Replace with your actual deployment URL
         
         const payload = {
             timestamp: new Date().toISOString(),
@@ -108,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
             otherInstructions: data.otherInstructions || ''
         };
 
+        console.log('Sending data to Google Sheets:', payload);
+        
         const response = await fetch(googleAppsScriptUrl, {
             method: 'POST',
             mode: 'no-cors', // Important for cross-origin requests
@@ -117,6 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(payload)
         });
 
+        console.log('Response received:', response);
+        
         // Since we're using no-cors, we can't check the response status
         // The success is assumed if no error is thrown
         await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate processing time
