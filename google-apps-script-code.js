@@ -14,8 +14,18 @@ function doPost(e) {
         .setHeader('Access-Control-Allow-Headers', 'Content-Type');
     }
     
-    // Parse the incoming data
-    const data = JSON.parse(e.postData.contents);
+    // Parse the incoming data (handle both JSON and form data)
+    let data;
+    if (e.postData.type === 'application/json') {
+      data = JSON.parse(e.postData.contents);
+    } else {
+      // Handle form data
+      data = {};
+      const params = e.parameter;
+      Object.keys(params).forEach(key => {
+        data[key] = params[key];
+      });
+    }
     
     // Get the active spreadsheet (replace with your sheet ID if needed)
     const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();

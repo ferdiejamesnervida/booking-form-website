@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Form submission with Google Sheets
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
 
         if (!validateForm()) {
@@ -62,75 +62,51 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
 
-        try {
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+        // Create a new form for submission to Google Apps Script
+        const googleForm = document.createElement('form');
+        googleForm.method = 'POST';
+        googleForm.action = 'https://script.google.com/macros/s/AKfycbw1culn3M9DxXuovQJ0lyKmPFSCxIKwOWvhbB1x7YQWQbO8f30A-HY-4n1A6c2qVoXv/exec';
+        googleForm.target = 'google-script-iframe';
+        googleForm.style.display = 'none';
 
-            // Send to Google Sheets
-            await sendToGoogleSheets(data);
+        // Get form data
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
 
-            showSuccessModal();
-            form.reset();
+        // Add timestamp
+        data.timestamp = new Date().toISOString();
 
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            alert('There was an error submitting your request. Please try again.');
-        } finally {
-            submitBtn.classList.remove('loading');
-            submitBtn.disabled = false;
-        }
-    });
-
-    async function sendToGoogleSheets(data) {
-        const googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbw1culn3M9DxXuovQJ0lyKmPFSCxIKwOWvhbB1x7YQWQbO8f30A-HY-4n1A6c2qVoXv/exec'; // Replace with your actual deployment URL
-        
-        const payload = {
-            timestamp: new Date().toISOString(),
-            firstName: data.firstName,
-            lastName: data.lastName,
-            role: data.role || '',
-            email: data.email,
-            phone: data.phone || '',
-            messageType: data.messageType || '',
-            organization: data.organization || '',
-            orgType: data.orgType || '',
-            eventTitle: data.eventTitle || '',
-            eventDate: data.eventDate || '',
-            eventTime: data.eventTime || '',
-            venue: data.venue || '',
-            venueType: data.venueType || '',
-            audienceType: data.audienceType || '',
-            attendees: data.attendees || '',
-            otherSpeakers: data.otherSpeakers || '',
-            suggestedTopic: data.suggestedTopic || '',
-            speakingDuration: data.speakingDuration || '',
-            budget: data.budget || '',
-            otherInstructions: data.otherInstructions || ''
-        };
-
-        console.log('Sending data to Google Sheets:', payload);
-        
-        const response = await fetch(googleAppsScriptUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
+        // Add all fields as hidden inputs
+        Object.keys(data).forEach(key => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = data[key] || '';
+            googleForm.appendChild(input);
         });
 
-        console.log('Response received:', response);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        console.log('Response data:', result);
-        
-        if (result.result === 'error') {
-            throw new Error(result.error || 'Unknown error from server');
-        }
-    }
+        // Create hidden iframe
+        const iframe = document.createElement('iframe');
+        iframe.name = 'google-script-iframe';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        // Add form to page and submit
+        document.body.appendChild(googleForm);
+        googleForm.submit();
+
+        // Show success after a delay
+        setTimeout(() => {
+            showSuccessModal();
+            form.reset();
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+            
+            // Clean up
+            document.body.removeChild(googleForm);
+            document.body.removeChild(iframe);
+        }, 2000);
+    });
 
     // Success modal functions
     function showSuccessModal() {
