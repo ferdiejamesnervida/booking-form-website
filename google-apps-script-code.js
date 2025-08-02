@@ -4,6 +4,12 @@
 
 function doPost(e) {
   try {
+    // Add debug logging
+    Logger.log('doPost function called');
+    Logger.log('Request parameters: ' + JSON.stringify(e.parameter));
+    Logger.log('Post data type: ' + e.postData.type);
+    Logger.log('Post data contents: ' + e.postData.contents);
+    
     // Handle CORS preflight requests
     if (e.parameter.method === 'OPTIONS') {
       return ContentService
@@ -24,9 +30,14 @@ function doPost(e) {
       });
     }
     
+    Logger.log('Parsed data: ' + JSON.stringify(data));
+    
     // Get the active spreadsheet (make sure you have a Google Sheet open)
+    Logger.log('Getting spreadsheet...');
     const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = spreadsheet.getActiveSheet();
+    Logger.log('Spreadsheet name: ' + spreadsheet.getName());
+    Logger.log('Sheet name: ' + sheet.getName());
     
     // If this is the first submission, add headers
     if (sheet.getLastRow() === 0) {
@@ -83,10 +94,14 @@ function doPost(e) {
     
     // Add the new row
     const nextRow = sheet.getLastRow() + 1;
+    Logger.log('Adding data to row: ' + nextRow);
     sheet.getRange(nextRow, 1, 1, rowData.length).setValues([rowData]);
+    Logger.log('Data added successfully');
     
     // Send email notification
+    Logger.log('Sending email notification...');
     sendEmailNotification(data);
+    Logger.log('Email sent successfully');
     
     // Return success response
     return ContentService

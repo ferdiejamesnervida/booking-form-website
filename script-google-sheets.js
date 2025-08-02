@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create a new form for submission to Google Apps Script
         const googleForm = document.createElement('form');
         googleForm.method = 'POST';
-        googleForm.action = 'https://script.google.com/macros/s/AKfycbw1culn3M9DxXuovQJ0lyKmPFSCxIKwOWvhbB1x7YQWQbO8f30A-HY-4n1A6c2qVoXv/exec';
+        googleForm.action = 'https://script.google.com/macros/s/1ZsRv55_ODU9jFukJCz01I9S3dz5MNv-UKmwQcw0RYiU/exec';
         googleForm.target = 'google-script-iframe';
         googleForm.style.display = 'none';
 
