@@ -1,43 +1,30 @@
-// Google Apps Script Code
-// Copy this entire code into your Google Apps Script editor
-// Then deploy as a web app
+// Google Apps Script for Booking Form
+// Deploy as web app with "Anyone" access
 
 function doPost(e) {
   try {
-    // Add debug logging
     Logger.log('doPost function called');
-    Logger.log('Request parameters: ' + JSON.stringify(e.parameter));
-    Logger.log('Post data type: ' + e.postData.type);
-    Logger.log('Post data contents: ' + e.postData.contents);
     
-    // Handle CORS preflight requests
-    if (e.parameter.method === 'OPTIONS') {
-      return ContentService
-        .createTextOutput('')
-        .setMimeType(ContentService.MimeType.TEXT);
-    }
-    
-    // Parse the incoming data (handle both JSON and form data)
-    let data;
+    // Parse the incoming data
+    let data = {};
     if (e.postData.type === 'application/json') {
       data = JSON.parse(e.postData.contents);
     } else {
       // Handle form data
-      data = {};
       const params = e.parameter;
       Object.keys(params).forEach(key => {
         data[key] = params[key];
       });
     }
     
-    Logger.log('Parsed data: ' + JSON.stringify(data));
+    Logger.log('Received data: ' + JSON.stringify(data));
     
-    // Get the active spreadsheet (make sure you have a Google Sheet open)
-    Logger.log('Getting spreadsheet...');
-    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    // Get the spreadsheet by ID
+    const spreadsheetId = '1c5VnVwRH7iCwzhRQuVNtYQ6T1dMqaLx8mg-aoHUiE5I';
+    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+    Logger.log('Spreadsheet opened: ' + spreadsheet.getName());
+    
     const sheet = spreadsheet.getActiveSheet();
-    Logger.log('Spreadsheet name: ' + spreadsheet.getName());
-    Logger.log('Sheet name: ' + sheet.getName());
     
     // If this is the first submission, add headers
     if (sheet.getLastRow() === 0) {
@@ -65,6 +52,7 @@ function doPost(e) {
         'Other Instructions'
       ];
       sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+      Logger.log('Headers added');
     }
     
     // Prepare the row data
@@ -94,14 +82,16 @@ function doPost(e) {
     
     // Add the new row
     const nextRow = sheet.getLastRow() + 1;
-    Logger.log('Adding data to row: ' + nextRow);
     sheet.getRange(nextRow, 1, 1, rowData.length).setValues([rowData]);
-    Logger.log('Data added successfully');
+    Logger.log('Data added to row: ' + nextRow);
     
     // Send email notification
-    Logger.log('Sending email notification...');
-    sendEmailNotification(data);
-    Logger.log('Email sent successfully');
+    try {
+      sendEmailNotification(data);
+      Logger.log('Email sent successfully');
+    } catch (emailError) {
+      Logger.log('Email error: ' + emailError.toString());
+    }
     
     // Return success response
     return ContentService
@@ -109,6 +99,7 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
       
   } catch (error) {
+    Logger.log('Error: ' + error.toString());
     // Return error response
     return ContentService
       .createTextOutput(JSON.stringify({ 'result': 'error', 'error': error.toString() }))
@@ -116,9 +107,9 @@ function doPost(e) {
   }
 }
 
-// Optional: Email notification function
+// Email notification function
 function sendEmailNotification(data) {
-  const recipient = 'contact@ferdienervida.com'; // Replace with your email
+  const recipient = 'contact@ferdienervida.com';
   const subject = `New Booking Request from ${data.firstName} ${data.lastName}`;
   
   const message = `
@@ -137,14 +128,14 @@ View full details in your Google Sheet.
   MailApp.sendEmail(recipient, subject, message);
 }
 
-// Test function to verify the script works
+// Test function
 function doGet(e) {
   return ContentService
     .createTextOutput('Google Apps Script is working!')
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
-// Test email function - run this manually to test email sending
+// Test email function
 function testEmail() {
   const testData = {
     firstName: 'Test',

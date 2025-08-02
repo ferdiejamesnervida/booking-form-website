@@ -1,17 +1,10 @@
 // Google Sheets Form Handler
-// Instructions:
-// 1. Create a Google Sheet
-// 2. Go to Extensions > Apps Script
-// 3. Replace the default code with the web app code below
-// 4. Deploy as web app and copy the URL
-// 5. Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL' below with your deployed URL
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('bookingForm');
     const modal = document.getElementById('successModal');
     const submitBtn = document.querySelector('.submit-btn');
 
-    // Form validation (same as before)
+    // Form validation
     function validateForm() {
         let isValid = true;
         const requiredFields = ['firstName', 'lastName', 'email'];
@@ -51,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return emailRegex.test(email);
     }
 
-    // Form submission with Google Sheets
+    // Form submission
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -65,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create a new form for submission to Google Apps Script
         const googleForm = document.createElement('form');
         googleForm.method = 'POST';
-        googleForm.action = 'https://script.google.com/macros/s/1ZsRv55_ODU9jFukJCz01I9S3dz5MNv-UKmwQcw0RYiU/exec';
+        googleForm.action = 'https://script.google.com/macros/s/AKfycbzxKf5tkk9FlrYM1zD1SRl0m42RjTN8NQp-IbXkPetBUv1vh-ZwzKNYqujGAd5RMo3P/exec';
         googleForm.target = 'google-script-iframe';
         googleForm.style.display = 'none';
 
